@@ -1,0 +1,202 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo-dogs.png';
+import { nav, site } from '../config/site';
+import { href } from '../lib/format';
+
+const current = Astro.url.pathname.replace(import.meta.env.BASE_URL.replace(/\/$/, ''), '') || '/';
+const isActive = (path: string) => current === path || (path !== '/' && current.startsWith(path));
+---
+
+<header class="top">
+  <div class="wrap bar">
+    <a class="brand" href={href('/')} aria-label={`${site.name}, accueil`}>
+      <Image src={logo} alt="" width={64} height={63} loading="eager" class="brand__logo" />
+      <span class="brand__text">
+        <span class="brand__name">Les Dogs</span>
+        <span class="brand__sub">Roller hockey · Meudon</span>
+      </span>
+    </a>
+
+    <nav class="nav nav--wide" aria-label="Navigation principale">
+      <ul>
+        {nav.map((item) => (
+          <li>
+            <a href={href(item.href)} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a>
+          </li>
+        ))}
+      </ul>
+      {site.registration.open && <a class="btn nav__cta" href={href('/inscription/')}>S'inscrire</a>}
+    </nav>
+
+    <details class="nav nav--small">
+      <summary>
+        <span class="burger" aria-hidden="true"><span></span><span></span><span></span></span>
+        Menu
+      </summary>
+      <ul>
+        {nav.map((item) => (
+          <li>
+            <a href={href(item.href)} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a>
+          </li>
+        ))}
+        <li><a href={href('/inscription/')} class="nav__cta-link">S'inscrire</a></li>
+      </ul>
+    </details>
+  </div>
+  <div class="stripes--thin"></div>
+</header>
+
+<style>
+  .top {
+    background: var(--navy);
+    color: #fff;
+    position: relative;
+    z-index: 20;
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    min-height: 84px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #fff;
+    text-decoration: none;
+  }
+  .brand:hover {
+    color: #fff;
+  }
+  .brand__logo {
+    width: 58px;
+    height: auto;
+    background: #fff;
+    border-radius: 50%;
+    padding: 4px;
+  }
+  .brand__text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+  .brand__name {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+  .brand__sub {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--husky);
+    margin-top: 0.3rem;
+  }
+
+  .nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .nav a {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .nav--wide {
+    display: none;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .nav--wide ul {
+    display: flex;
+    gap: 1.35rem;
+  }
+  .nav--wide ul a {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding-block: 0.4rem;
+    border-bottom: 3px solid transparent;
+  }
+  .nav--wide ul a:hover,
+  .nav--wide ul a[aria-current='page'] {
+    border-bottom-color: var(--red);
+  }
+  .nav__cta {
+    font-size: 1.05rem;
+    padding: 0.65em 1em 0.6em;
+  }
+
+  .nav--small summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.5rem 0;
+  }
+  .nav--small summary::-webkit-details-marker {
+    display: none;
+  }
+  .burger {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .burger span {
+    width: 22px;
+    height: 3px;
+    background: #fff;
+  }
+  .nav--small[open] ul {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    background: var(--navy-deep);
+    padding: 0.5rem var(--gutter) 1.25rem;
+    border-top: 4px solid var(--red);
+  }
+  .nav--small li a {
+    display: block;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.45rem;
+    text-transform: uppercase;
+  }
+  .nav--small li a[aria-current='page'] {
+    color: var(--husky);
+  }
+  .nav--small .nav__cta-link {
+    color: #fff;
+    background: var(--red);
+    margin-top: 1rem;
+    padding-inline: 1rem;
+    border-bottom: 0;
+  }
+
+  @media (min-width: 1080px) {
+    .nav--wide {
+      display: flex;
+    }
+    .nav--small {
+      display: none;
+    }
+  }
+</style>

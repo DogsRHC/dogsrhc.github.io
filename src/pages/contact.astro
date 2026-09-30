@@ -1,0 +1,129 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import TrainingBoard from '../components/TrainingBoard.astro';
+import { site } from '../config/site';
+import { getStaff } from '../lib/data';
+import { href, telHref } from '../lib/format';
+
+const staff = await getStaff();
+---
+
+<Base title="Contact" description={`Contacter les Dogs, club de roller hockey de ${site.district} : inscription, séance d'essai, organisation de matchs.`}>
+  <PageHead kicker="Nous écrire" title="Contact" intro="Une question sur les inscriptions, une séance d'essai, un match ou un tournoi à organiser contre nous ? Le plus simple, c'est le mail." />
+
+  <section class="section">
+    <div class="wrap grid">
+      <div>
+        <p class="kicker">Par mail</p>
+        <p class="mail"><a href={`mailto:${site.email}`}>{site.email}</a></p>
+        <p>
+          Le bureau est bénévole, on répond dès que possible. Pour organiser une rencontre, indique les
+          dates possibles et le lieu : on transmet au responsable des matchs.
+        </p>
+
+        <p class="kicker spaced">Sur les réseaux</p>
+        <ul class="social">
+          <li><a href={site.social.facebook} rel="noopener">Facebook</a><span>Les Dogs de Meudon</span></li>
+          <li><a href={site.social.instagram} rel="noopener">Instagram</a><span>@lesdogs_streethockey</span></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="kicker">Qui fait quoi</p>
+        <dl class="who">
+          {staff.map((s) => (
+            <div>
+              <dt>{s.data.role}</dt>
+              <dd>
+                {s.data.name}
+                {s.data.phone && <> · <a href={telHref(s.data.phone)}>{s.data.phone}</a></>}
+              </dd>
+            </div>
+          ))}
+        </dl>
+        <p class="kicker spaced">Nous trouver</p>
+        <TrainingBoard />
+        <p class="small">Passe plutôt pendant un entraînement, et préviens-nous avant. <a href={href('/entrainements/')}>Infos pratiques</a></p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .grid {
+    display: grid;
+    gap: 3rem;
+  }
+  @media (min-width: 900px) {
+    .grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+    }
+  }
+  .mail {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(1.8rem, 4.5vw, 2.8rem);
+    line-height: 1.1;
+    word-break: break-word;
+  }
+  .mail a {
+    color: var(--navy);
+    text-decoration-color: var(--red);
+    text-decoration-thickness: 4px;
+    text-underline-offset: 6px;
+  }
+  .spaced {
+    margin-top: 2.5rem;
+  }
+  .social {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 3px solid var(--navy);
+  }
+  .social li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .social a {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--navy);
+  }
+  .social span {
+    color: var(--ink-soft);
+  }
+  .who {
+    margin: 0;
+    border-top: 3px solid var(--navy);
+  }
+  .who div {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.25rem 1rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .who dt {
+    color: var(--ink-soft);
+  }
+  .who dd {
+    margin: 0;
+    font-weight: 600;
+    color: var(--navy);
+  }
+  .small {
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    margin-top: 1rem;
+  }
+</style>

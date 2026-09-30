@@ -1,0 +1,157 @@
+---
+import { Image, getImage } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { site } from '../config/site';
+import { getPhotos, getVideos } from '../lib/data';
+
+const photos = await Promise.all(
+  (await getPhotos()).map(async (p) => ({ ...p.data, id: p.id, full: await getImage({ src: p.data.image, width: 1800 }) })),
+);
+const videos = await getVideos();
+const groups = [...new Set(videos.map((v) => v.data.group))].map((group) => ({
+  group,
+  items: videos.filter((v) => v.data.group === group),
+}));
+---
+
+<Base title="Photos et vidéos" description="Photos de matchs, de tournois et de la vie du club, et nos vidéos de matchs.">
+  <PageHead kicker="Album" title="Photos et vidéos" intro="Des maillots à flammes aux maillots au husky : une sélection de photos de matchs, de tournois et de la vie du club." >
+    <p class="album-link"><a href={site.fullAlbumUrl} rel="noopener">Voir l'album complet</a></p>
+  </PageHead>
+
+  <section class="section">
+    <div class="wrap">
+      <ul class="gallery">
+        {photos.map((p, i) => (
+          <li class:list={[i % 7 === 0 && 'wide']}>
+            <a href={p.full.src}>
+              <Image src={p.image} alt={p.alt} widths={[400, 800]} sizes="(min-width: 1000px) 33vw, (min-width: 600px) 50vw, 100vw" />
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="rights">Les photos appartiennent au club et à leurs auteurs. Merci de nous demander avant de les réutiliser.</p>
+    </div>
+  </section>
+
+  <section class="section section--ice" id="videos">
+    <div class="wrap">
+      <p class="kicker">En vidéo</p>
+      <h2>Nos matchs en vidéo</h2>
+      {groups.map((g) => (
+        <div class="vgroup">
+          <h3>{g.group}</h3>
+          <ul class="videos">
+            {g.items.map((v) => (
+              <li>
+                <a href={`https://www.youtube.com/watch?v=${v.data.youtubeId}`} rel="noopener">
+                  <span class="thumb">
+                    <Image src={v.data.thumbnail} alt="" width={480} />
+                    <span class="play" aria-hidden="true"></span>
+                  </span>
+                  <span class="vtitle">{v.data.title}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+      <p class="note">Les vidéos s'ouvrent sur YouTube.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .album-link {
+    margin-top: 1.25rem !important;
+  }
+  .album-link a {
+    color: #fff;
+    font-weight: 600;
+  }
+  .gallery {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-auto-flow: dense;
+    gap: 6px;
+  }
+  .gallery li.wide {
+    grid-column: span 2;
+  }
+  @media (max-width: 560px) {
+    .gallery li.wide {
+      grid-column: auto;
+    }
+  }
+  .gallery img {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+  }
+  .gallery a:hover img {
+    opacity: 0.88;
+  }
+  .rights,
+  .note {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    margin-top: 1rem;
+  }
+  .vgroup {
+    margin-top: 2rem;
+  }
+  .vgroup h3 {
+    font-size: 1.3rem;
+    color: var(--red);
+    letter-spacing: 0.05em;
+  }
+  .videos {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.25rem;
+  }
+  .videos a {
+    color: var(--navy);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .thumb {
+    position: relative;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .thumb img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+  .play {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 3rem;
+    height: 2.2rem;
+    background: var(--red);
+  }
+  .play::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-35%, -50%);
+    border-left: 12px solid #fff;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+  }
+  .videos a:hover .vtitle {
+    color: var(--red);
+  }
+</style>

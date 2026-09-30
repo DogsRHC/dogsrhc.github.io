@@ -1,0 +1,8 @@
+# Agenda de la saison. Exemple d'entrée :
+# - id: 2026-10-10-tournoi
+#   date: 2026-10-10
+#   time: "14:00"
+#   title: Tournoi d'automne
+#   kind: tournoi        # match | tournoi | club
+#   venue: pierre-et-marie-curie   # ou place: "Gymnase X, Ville"
+[]

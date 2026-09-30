@@ -1,0 +1,263 @@
+/* Socle visuel du site des Dogs.
+   Couleurs tirées du logo (marine, rouge, blanc) et motif de rayures de maillot. */
+
+/* Polices auto-hébergées (aucun appel à un service tiers). */
+@import '@fontsource/big-shoulders-display/700';
+@import '@fontsource/big-shoulders-display/800';
+@import '@fontsource/big-shoulders-display/900';
+@import '@fontsource/barlow/400';
+@import '@fontsource/barlow/400-italic';
+@import '@fontsource/barlow/500';
+@import '@fontsource/barlow/600';
+
+:root {
+  --navy: #0e1a4b;
+  --navy-deep: #08102f;
+  --navy-soft: #1f2d6b;
+  --red: #b3141d;
+  --red-dark: #8e0f16;
+  --ice: #eef2f7;
+  --husky: #c9dbeb;
+  --paper: #ffffff;
+  --ink: #111735;
+  --ink-soft: #4a5170;
+  --line: #d6dce8;
+
+  --font-display: 'Big Shoulders Display', 'Arial Narrow', sans-serif;
+  --font-body: 'Barlow', system-ui, sans-serif;
+
+  --wrap: 1180px;
+  --gutter: clamp(16px, 4vw, 40px);
+  --radius: 3px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 1rem;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: var(--red);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+a:hover {
+  color: var(--red-dark);
+}
+
+:focus-visible {
+  outline: 3px solid var(--red);
+  outline-offset: 2px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 0.98;
+  letter-spacing: 0.005em;
+  margin: 0 0 0.5em;
+  text-transform: uppercase;
+  color: var(--navy);
+}
+h1 {
+  font-size: clamp(2.6rem, 7vw, 5.2rem);
+}
+h2 {
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+}
+h3 {
+  font-size: 1.6rem;
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+.wrap {
+  width: 100%;
+  max-width: var(--wrap);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: clamp(3rem, 8vw, 6rem);
+}
+.section--ice {
+  background: var(--ice);
+}
+.section--navy {
+  background: var(--navy);
+  color: #fff;
+}
+.section--navy h2,
+.section--navy h3 {
+  color: #fff;
+}
+
+/* Petit sur-titre en capitales, façon inscription de maillot */
+.kicker {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 0.6rem;
+}
+.section--navy .kicker {
+  color: var(--husky);
+}
+
+.lead {
+  font-size: 1.25rem;
+  line-height: 1.5;
+  max-width: 38em;
+}
+
+.prose {
+  max-width: 42em;
+}
+.prose h2 {
+  font-size: 2rem;
+  margin-top: 2.2rem;
+}
+.prose h3 {
+  margin-top: 1.6rem;
+}
+.prose ul {
+  padding-left: 1.2em;
+}
+.prose li {
+  margin-bottom: 0.35em;
+}
+
+/* Rayures de bas de maillot : marine / blanc / rouge / blanc / marine */
+.stripes {
+  height: 22px;
+  background: linear-gradient(
+    to bottom,
+    var(--navy) 0 6px,
+    #fff 6px 9px,
+    var(--red) 9px 13px,
+    #fff 13px 16px,
+    var(--navy) 16px 22px
+  );
+}
+.stripes--thin {
+  height: 10px;
+  background: linear-gradient(to bottom, var(--red) 0 4px, #fff 4px 6px, var(--navy) 6px 10px);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.8em 1.3em 0.75em;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 2px solid var(--red);
+  background: var(--red);
+  color: #fff;
+  border-radius: var(--radius);
+  line-height: 1;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+}
+.btn:hover {
+  background: var(--red-dark);
+  border-color: var(--red-dark);
+  color: #fff;
+}
+.btn--ghost {
+  background: transparent;
+  color: var(--navy);
+  border-color: var(--navy);
+}
+.btn--ghost:hover {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: #fff;
+}
+.section--navy .btn--ghost,
+.on-dark .btn--ghost {
+  color: #fff;
+  border-color: #fff;
+}
+.section--navy .btn--ghost:hover,
+.on-dark .btn--ghost:hover {
+  background: #fff;
+  color: var(--navy);
+}
+
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.page-head {
+  background: var(--navy);
+  color: #fff;
+  padding-block: clamp(2.5rem, 6vw, 4.5rem) clamp(2rem, 4vw, 3rem);
+}
+.page-head h1 {
+  color: #fff;
+  margin: 0;
+}
+.page-head p {
+  margin: 1rem 0 0;
+  max-width: 40em;
+  font-size: 1.15rem;
+  color: var(--husky);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.tabnum {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

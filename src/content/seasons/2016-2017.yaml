@@ -1,0 +1,25 @@
+startYear: 2016
+division: CLRH
+honour: vice-champion
+honourLabel: Vice-champion CLRH
+competitions:
+  - name: CLRH
+    matches:
+      - { home: Meudon, homeScore: 5, awayScore: 0, away: La Verrière }
+      - { home: Meudon, homeScore: 8, awayScore: 3, away: Les Ulis }
+      - { home: Meudon, homeScore: 8, awayScore: 7, away: Boutigny }
+      - { home: Meudon, homeScore: 12, awayScore: 10, away: Viarmes }
+      - { home: Meudon, homeScore: 8, awayScore: 6, away: Paris XIII }
+      - { home: Meudon, homeScore: 5, awayScore: 0, away: La Verrière }
+  - name: Carré final
+    matches:
+      - { home: Meudon, homeScore: 10, awayScore: 3, away: Boutigny }
+      - { home: Meudon, homeScore: 4, awayScore: 5, away: Viarmes }
+  - name: Matchs amicaux
+    matches:
+      - { home: Meudon, homeScore: 8, awayScore: 9, away: Breuillet-Brétigny }
+      - { home: Meudon, homeScore: 7, awayScore: 5, away: Paris XIII }
+      - { home: Meudon, homeScore: 16, awayScore: 10, away: RSI }
+      - { home: Meudon, homeScore: 16, awayScore: 7, away: Antony }
+tournaments:
+  - { name: Tournoi de Valence, result: 6e }

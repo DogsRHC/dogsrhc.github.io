@@ -1,0 +1,81 @@
+# Sélection de photos affichée sur la page Photos et vidéos (l'album complet reste sur le lien externe).
+- id: album-060
+  order: 1
+  image: ../assets/photos/album-060.jpg
+  alt: Les Dogs en maillot marine regroupés devant leur cage
+- id: album-062
+  order: 2
+  image: ../assets/photos/album-062.jpg
+  alt: Photo d'équipe en maillots marine au husky
+- id: album-004
+  order: 3
+  image: ../assets/photos/album-004.jpg
+  alt: Joueurs en maillots à flammes qui fêtent un but devant la cage
+- id: album-052
+  order: 4
+  image: ../assets/photos/album-052.jpg
+  alt: L'équipe pose avec la coupe après une finale
+- id: album-036
+  order: 5
+  image: ../assets/photos/album-036.jpg
+  alt: Un attaquant en maillot 22 face au gardien adverse
+- id: album-002
+  order: 6
+  image: ../assets/photos/album-002.jpg
+  alt: Joueurs casqués sur le banc pendant un match
+- id: album-009
+  order: 7
+  image: ../assets/photos/album-009.jpg
+  alt: Le numéro 88 à l'offensive devant la cage adverse
+- id: album-021
+  order: 8
+  image: ../assets/photos/album-021.jpg
+  alt: Le coach donne ses consignes à deux joueurs
+- id: album-046
+  order: 9
+  image: ../assets/photos/album-046.jpg
+  alt: Affiche des champions CLRH 2014-2015
+- id: album-014
+  order: 10
+  image: ../assets/photos/album-014.jpg
+  alt: Joueurs alignés sur le terrain avant une rencontre
+- id: album-057
+  order: 11
+  image: ../assets/photos/album-057.jpg
+  alt: Photo d'équipe en maillots blancs au husky
+- id: album-061
+  order: 12
+  image: ../assets/photos/album-061.jpg
+  alt: Les deux équipes réunies après un match amical à Asnières
+- id: album-041
+  order: 13
+  image: ../assets/photos/album-041.jpg
+  alt: Le gardien des Dogs à genoux pendant un arrêt
+- id: album-044
+  order: 14
+  image: ../assets/photos/album-044.jpg
+  alt: Match en extérieur sur un terrain bitumé
+- id: album-017
+  order: 15
+  image: ../assets/photos/album-017.jpg
+  alt: Un défenseur devant la cage des Dogs
+- id: album-024
+  order: 16
+  image: ../assets/photos/album-024.jpg
+  alt: Joueurs regroupés près de la cage en fin de match
+- id: album-030
+  order: 17
+  image: ../assets/photos/album-030.jpg
+  alt: Mêlée devant la cage
+- id: album-028
+  order: 18
+  image: ../assets/photos/album-028.jpg
+  alt: Joueurs et supporters réunis en extérieur
+- id: album-048
+  order: 19
+  image: ../assets/photos/album-048.jpg
+  alt: Sortie du club au soleil
+- id: album-049
+  order: 20
+  image: ../assets/photos/album-049.jpg
+  alt: Les Dogs derrière leur banderole

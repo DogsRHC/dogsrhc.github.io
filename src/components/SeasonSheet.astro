@@ -1,0 +1,210 @@
+---
+// Feuille de résultats d'une saison : bilan, compétitions, tournois.
+import type { Season } from '../lib/data';
+import { outcome, record } from '../lib/data';
+import { formatDate } from '../lib/format';
+
+interface Props {
+  season: Season;
+}
+const { season } = Astro.props;
+const { competitions, tournaments, summary } = season.data;
+const US = 'Meudon';
+---
+
+<div class="sheet">
+  {summary && <p class="summary">{summary}</p>}
+
+  {competitions.map((c) => {
+    const r = record(c.matches);
+    return (
+      <section class="comp">
+        <h4 class="comp__name">
+          {c.name}
+          {r.played > 0 && (
+            <span class="comp__record tabnum">
+              {r.w} V · {r.d > 0 ? `${r.d} N · ` : ''}{r.l} D
+            </span>
+          )}
+        </h4>
+        <table class="scores">
+          <caption class="visually-hidden">{c.name}</caption>
+          <thead class="visually-hidden">
+            <tr><th scope="col">Date</th><th scope="col">Domicile</th><th scope="col">Score</th><th scope="col">Extérieur</th><th scope="col">Résultat</th></tr>
+          </thead>
+          <tbody>
+            {c.matches.map((m) => {
+              const o = outcome(m);
+              const hasScore = m.homeScore !== undefined && m.awayScore !== undefined;
+              return (
+                <tr class:list={[o && `is-${o}`]}>
+                  <td class="date">{m.date ? formatDate(m.date, { day: '2-digit', month: '2-digit', year: '2-digit' }) : ''}</td>
+                  <td class:list={['team', 'team--home', m.home === US && 'us']}>{m.home}</td>
+                  <td class="score tabnum">
+                    {hasScore ? <>{m.homeScore}<span class="dash">-</span>{m.awayScore}</> : <span class="na">-</span>}
+                  </td>
+                  <td class:list={['team', m.away === US && 'us']}>{m.away}</td>
+                  <td class="res">
+                    {o && <span class:list={['pill', `pill--${o}`]} title={o === 'V' ? 'Victoire' : o === 'D' ? 'Défaite' : 'Nul'}>{o}</span>}
+                    {m.note && <span class="note">{m.note}</span>}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </section>
+    );
+  })}
+
+  {tournaments.length > 0 && (
+    <section class="comp">
+      <h4 class="comp__name">Tournois</h4>
+      <ul class="tournaments">
+        {tournaments.map((t) => (
+          <li>
+            <span>{t.name}{t.date && <span class="date"> ({formatDate(t.date, { month: 'long', year: 'numeric' })})</span>}</span>
+            <strong>{t.result}</strong>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+</div>
+
+<style>
+  .summary {
+    font-size: 1.1rem;
+    max-width: 40em;
+  }
+  .comp {
+    margin-top: 1.5rem;
+  }
+  .comp__name {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem;
+    font-size: 1.3rem;
+    letter-spacing: 0.04em;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid var(--navy);
+    margin-bottom: 0;
+  }
+  .comp__record {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  .scores {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .scores td {
+    padding: 0.55rem 0.35rem;
+    border-bottom: 1px solid var(--line);
+    vertical-align: middle;
+  }
+  .date {
+    color: var(--ink-soft);
+    font-size: 0.85rem;
+    white-space: nowrap;
+    width: 4.5rem;
+  }
+  .team {
+    width: 38%;
+  }
+  .team--home {
+    text-align: right;
+  }
+  .us {
+    font-weight: 600;
+    color: var(--navy);
+  }
+  .score {
+    text-align: center;
+    white-space: nowrap;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.35rem;
+    color: var(--navy);
+    width: 5.5rem;
+  }
+  .dash {
+    margin-inline: 0.3em;
+    color: var(--ink-soft);
+  }
+  .na {
+    color: var(--line);
+  }
+  .res {
+    width: 2rem;
+    white-space: nowrap;
+    text-align: right;
+  }
+  .pill {
+    display: inline-block;
+    width: 1.6rem;
+    height: 1.6rem;
+    line-height: 1.6rem;
+    text-align: center;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.95rem;
+    border-radius: 2px;
+  }
+  .pill--V {
+    background: var(--navy);
+    color: #fff;
+  }
+  .pill--D {
+    background: var(--red);
+    color: #fff;
+  }
+  .pill--N {
+    background: var(--husky);
+    color: var(--navy);
+  }
+  .note {
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    font-style: italic;
+    margin-left: 0.4rem;
+  }
+  .tournaments {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .tournaments li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.55rem 0.35rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .tournaments strong {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    text-transform: uppercase;
+    color: var(--navy);
+    white-space: nowrap;
+  }
+  @media (max-width: 560px) {
+    .date {
+      display: none;
+    }
+    .scores td {
+      padding-inline: 0.2rem;
+      font-size: 0.95rem;
+    }
+    .score {
+      width: 4.5rem;
+      font-size: 1.2rem;
+    }
+  }
+</style>

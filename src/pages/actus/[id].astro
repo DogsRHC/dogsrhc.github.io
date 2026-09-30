@@ -1,0 +1,57 @@
+---
+import { Image } from 'astro:assets';
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { getNews } from '../../lib/data';
+import { formatDate, href } from '../../lib/format';
+
+export async function getStaticPaths() {
+  const news = await getNews();
+  return news.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<Base title={entry.data.title} description={entry.data.summary} ogImage={entry.data.image}>
+  <article>
+    <header class="page-head">
+      <div class="wrap">
+        <p class="kicker"><time datetime={entry.data.date.toISOString().slice(0, 10)}>{formatDate(entry.data.date)}</time></p>
+        <h1>{entry.data.title}</h1>
+      </div>
+    </header>
+    <div class="stripes"></div>
+    <div class="section">
+      <div class="wrap">
+        {entry.data.image && (
+          <Image src={entry.data.image} alt={entry.data.imageAlt ?? ''} widths={[700, 1100]} sizes="(min-width: 900px) 820px, 100vw" class="cover" />
+        )}
+        <div class="prose body">
+          <Content />
+        </div>
+        <p class="back"><a href={href('/actus/')}>Toutes les actus</a></p>
+      </div>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .kicker {
+    color: var(--husky);
+  }
+  .cover {
+    width: 100%;
+    max-width: 820px;
+    margin-bottom: 2rem;
+    border-bottom: 6px solid var(--red);
+  }
+  .body {
+    font-size: 1.15rem;
+  }
+  .back {
+    margin-top: 2.5rem;
+    font-weight: 600;
+  }
+</style>

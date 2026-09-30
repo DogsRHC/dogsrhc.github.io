@@ -1,0 +1,73 @@
+# Vidéos YouTube. La vignette est stockée localement (aucun appel à YouTube au chargement de la page).
+- id: SSP-0HV_e3Q
+  order: 1
+  group: Les 25 ans du club
+  title: Match de gala des 25 ans
+  youtubeId: SSP-0HV_e3Q
+  thumbnail: ../assets/videos/SSP-0HV_e3Q.jpg
+- id: J5bY03VlP4E
+  order: 2
+  group: CLRH 2022-2023
+  title: Contre Viry, le résumé
+  youtubeId: J5bY03VlP4E
+  thumbnail: ../assets/videos/J5bY03VlP4E.jpg
+- id: 05UOxGC09Qk
+  order: 3
+  group: CLRH 2022-2023
+  title: Contre Viry
+  youtubeId: 05UOxGC09Qk
+  thumbnail: ../assets/videos/05UOxGC09Qk.jpg
+- id: 5JpO5m1J6Oc
+  order: 4
+  group: CLRH 2022-2023
+  title: Contre Ris-Orangis
+  youtubeId: 5JpO5m1J6Oc
+  thumbnail: ../assets/videos/5JpO5m1J6Oc.jpg
+- id: 5Lf_8BeiGCk
+  order: 5
+  group: CLRH 2022-2023
+  title: Contre Viry, le retour
+  youtubeId: 5Lf_8BeiGCk
+  thumbnail: ../assets/videos/5Lf_8BeiGCk.jpg
+- id: NTPnho_xlwM
+  order: 6
+  group: Amical 2022-2023
+  title: Contre P14
+  youtubeId: NTPnho_xlwM
+  thumbnail: ../assets/videos/NTPnho_xlwM.jpg
+- id: sW2OtjoFarU
+  order: 7
+  group: Tournoi de Breuillet, printemps 2023
+  title: Contre Les Ulis
+  youtubeId: sW2OtjoFarU
+  thumbnail: ../assets/videos/sW2OtjoFarU.jpg
+- id: qzF7sqp5z70
+  order: 8
+  group: Tournoi de Breuillet, printemps 2023
+  title: Contre Melun
+  youtubeId: qzF7sqp5z70
+  thumbnail: ../assets/videos/qzF7sqp5z70.jpg
+- id: tUCHgdYS38A
+  order: 9
+  group: Tournoi de Breuillet, printemps 2023
+  title: Contre Boutigny
+  youtubeId: tUCHgdYS38A
+  thumbnail: ../assets/videos/tUCHgdYS38A.jpg
+- id: Kmwd4jxZH14
+  order: 10
+  group: Tournoi de Breuillet, printemps 2023
+  title: Contre Breuillet
+  youtubeId: Kmwd4jxZH14
+  thumbnail: ../assets/videos/Kmwd4jxZH14.jpg
+- id: kJR5fON3Y68
+  order: 11
+  group: Tournoi de Breuillet, printemps 2023
+  title: Contre Dourdan
+  youtubeId: kJR5fON3Y68
+  thumbnail: ../assets/videos/kJR5fON3Y68.jpg
+- id: UYRMOhZ8OlA
+  order: 12
+  group: Tournoi de Breuillet, printemps 2023
+  title: Contre Brétigny
+  youtubeId: UYRMOhZ8OlA
+  thumbnail: ../assets/videos/UYRMOhZ8OlA.jpg

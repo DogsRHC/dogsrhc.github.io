@@ -1,0 +1,19 @@
+---
+// Layout des pages rédigées en Markdown dans src/pages/ (règlement, mentions légales...).
+// Frontmatter attendu : title, kicker (optionnel), intro (optionnel), description (optionnel).
+import Base from './Base.astro';
+import PageHead from '../components/PageHead.astro';
+
+const { frontmatter } = Astro.props;
+---
+
+<Base title={frontmatter.title} description={frontmatter.description ?? frontmatter.intro}>
+  <PageHead title={frontmatter.title} kicker={frontmatter.kicker} intro={frontmatter.intro} />
+  <section class="section">
+    <div class="wrap">
+      <article class="prose">
+        <slot />
+      </article>
+    </div>
+  </section>
+</Base>

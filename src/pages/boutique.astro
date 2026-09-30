@@ -1,0 +1,77 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { site } from '../config/site';
+import { getProducts } from '../lib/data';
+import { formatPrice } from '../lib/format';
+
+const products = await getProducts();
+const mailto = (name: string) =>
+  `mailto:${site.email}?subject=${encodeURIComponent(`Commande : ${name}`)}&body=${encodeURIComponent('Bonjour,\n\nJe voudrais commander : ' + name + '\nTaille : \nFlocage (nom et numéro) : \n\nMerci !')}`;
+---
+
+<Base title="Boutique" description="Maillots et pantalon aux couleurs des Dogs, sur commande auprès du club.">
+  <PageHead kicker="Aux couleurs du club" title="Boutique" intro="Les tenues des Dogs sont disponibles sur commande, selon les disponibilités. Écris-nous en précisant l'article et ta taille." />
+
+  <section class="section">
+    <div class="wrap">
+      <ul class="products">
+        {products.filter((p) => p.data.available).map((p) => (
+          <li>
+            <Image src={p.data.image} alt={p.data.imageAlt} widths={[500, 900]} sizes="(min-width: 900px) 380px, 100vw" class="img" />
+            <div class="info">
+              <h2>{p.data.name}</h2>
+              <p class="price tabnum">{formatPrice(p.data.price)}</p>
+            </div>
+            <a class="btn btn--ghost" href={mailto(p.data.name)}>Commander par mail</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .products {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 2.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+  .products li {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border-top: 3px solid var(--navy);
+    padding-top: 1rem;
+  }
+  .img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: contain;
+    background: var(--ice);
+  }
+  .info {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+  }
+  h2 {
+    font-size: 1.8rem;
+    margin: 0;
+  }
+  .price {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 1.8rem;
+    color: var(--red);
+    margin: 0;
+  }
+  .btn {
+    align-self: flex-start;
+  }
+</style>

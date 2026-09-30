@@ -1,0 +1,20 @@
+- id: reglement
+  order: 1
+  title: Règlement intérieur
+  description: À lire avant de s'inscrire. L'adhésion vaut acceptation.
+  path: documents/reglement-interieur.pdf
+- id: qs-sport
+  order: 2
+  title: Questionnaire de santé QS-Sport (Cerfa 15699)
+  description: Pour une réinscription. Sinon, il faut fournir un certificat médical.
+  path: documents/questionnaire-sante-qs-sport.pdf
+- id: attestation-qs-sport
+  order: 3
+  title: Attestation questionnaire de santé
+  description: À transmettre au club quand le certificat médical n'est pas nécessaire.
+  path: documents/attestation-qs-sport.pdf
+- id: rgpd
+  order: 4
+  title: Circulaire RGPD
+  description: Ce que le club fait de tes données d'adhérent.
+  path: documents/circulaire-rgpd.pdf

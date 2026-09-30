@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+import { href } from '../lib/format';
+---
+
+<Base title="Page introuvable">
+  <section class="section">
+    <div class="wrap">
+      <p class="kicker">Erreur 404</p>
+      <h1>Palet perdu.</h1>
+      <p class="lead">Cette page n'existe pas, ou plus. L'ancien site a déménagé, certaines adresses ont changé.</p>
+      <div class="btn-row">
+        <a class="btn" href={href('/')}>Retour à l'accueil</a>
+        <a class="btn btn--ghost" href={href('/contact/')}>Nous écrire</a>
+      </div>
+    </div>
+  </section>
+</Base>

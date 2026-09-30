@@ -1,0 +1,18 @@
+- id: maillot-principal
+  order: 1
+  name: Maillot principal
+  price: 50
+  image: ../assets/boutique/maillot-principal.jpg
+  imageAlt: Maillot blanc des Dogs à flammes rouges et jaunes, vu de face et de dos
+- id: maillot-secondaire
+  order: 2
+  name: Maillot secondaire
+  price: 50
+  image: ../assets/boutique/maillot-secondaire.jpg
+  imageAlt: Maillot secondaire des Dogs, vu de face et de dos
+- id: pantalon
+  order: 3
+  name: Pantalon
+  price: 55
+  image: ../assets/boutique/pantalon.jpg
+  imageAlt: Pantalon de roller hockey aux couleurs des Dogs

@@ -1,0 +1,53 @@
+# Construit et publie le site sur GitHub Pages.
+# - à chaque push sur main ;
+# - chaque lundi matin, pour que l'agenda (événements passés masqués) reste à jour sans intervention ;
+# - à la demande (onglet Actions).
+# Le déploiement est bloqué tant qu'il reste un « À COMPLÉTER » ou un tiret long dans le site.
+name: Déploiement
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 5 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx astro check
+      - run: npm run build
+        env:
+          # À renseigner dans Settings > Secrets and variables > Actions > Variables
+          SITE_URL: ${{ vars.SITE_URL }}
+          BASE_PATH: ${{ vars.BASE_PATH }}
+      - run: npm run check:release
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

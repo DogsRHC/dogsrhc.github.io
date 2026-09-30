@@ -1,0 +1,178 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import TrainingBoard from '../components/TrainingBoard.astro';
+import { site } from '../config/site';
+import { getVenues } from '../lib/data';
+import { href, mapUrl } from '../lib/format';
+
+const venues = await getVenues();
+
+// Équipement obligatoire, repris du règlement intérieur.
+const playerGear = [
+  'Rollers en ligne',
+  'Casque de roller hockey avec grille, ou demi-visière et protège-dents pour les majeurs',
+  'Gants de roller hockey',
+  'Coudières et jambières',
+  'Coquille ou protection pelvienne',
+  'Crosse, avec un embout ou du tape au bout du manche',
+  'Pantalon et maillot qui couvrent toutes les protections',
+];
+const extraForMinorsAndWomen = ['La grille sur le casque', 'Une gaine de protection', 'Un plastron souple'];
+const goalieGear = ['Bottes de gardien', 'Casque avec grille', 'Coquille', 'Culotte renforcée', 'Bouclier et mitaine', 'Plastron', 'Bavette'];
+---
+
+<Base title="Entraînements" description={`Horaires, gymnases et équipement pour s'entraîner avec les Dogs à ${site.district}.`}>
+  <PageHead kicker="Saison en cours" title="Entraînements" intro="Deux créneaux par semaine à Meudon-la-Forêt. L'équipement complet est obligatoire à chaque séance." />
+
+  <section class="section">
+    <div class="wrap grid">
+      <div>
+        <h2>Les horaires</h2>
+        <TrainingBoard />
+      </div>
+      <div>
+        <h2>Les gymnases</h2>
+        <ul class="venues">
+          {venues.map((v) => {
+            const address = [v.data.street, `${v.data.postcode} ${v.data.city}`].filter(Boolean).join(', ');
+            return (
+              <li>
+                <strong>{v.data.name}</strong>
+                <span>{address}{v.data.district && ` (${v.data.district})`}</span>
+                <a href={mapUrl(`${v.data.name} ${address}`)}>Voir sur la carte</a>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--ice">
+    <div class="wrap">
+      <p class="kicker">Avant de venir</p>
+      <h2>Qui peut venir ?</h2>
+      <div class="cols">
+        <p>
+          Il faut avoir au moins <strong>{site.registration.minimumAge} ans</strong> et un niveau de roller élémentaire : savoir avancer,
+          tourner et s'arrêter. Débutant en hockey ou joueur confirmé, tout le monde a sa place.
+        </p>
+        <p>
+          Le coach peut te proposer une <strong>séance d'essai</strong> pour voir où tu en es et t'orienter vers le groupe qui te
+          convient, régional ou loisir. <a href={href('/contact/')}>Écris-nous</a> avant de passer, pour qu'on t'attende.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="equipement">
+    <div class="wrap">
+      <p class="kicker">Obligatoire à chaque séance</p>
+      <h2>L'équipement</h2>
+      <div class="gear">
+        <div>
+          <h3>Joueurs</h3>
+          <ul class="checklist">{playerGear.map((g) => <li>{g}</li>)}</ul>
+          <p class="small">
+            <strong>Pour les mineurs et les femmes</strong>, s'ajoutent : {extraForMinorsAndWomen.join(', ').toLowerCase()}. Un
+            protège-cou est conseillé pour tout le monde.
+          </p>
+        </div>
+        <div>
+          <h3>Gardiens</h3>
+          <ul class="checklist">{goalieGear.map((g) => <li>{g}</li>)}</ul>
+          <p class="small">
+            Nos adhérents ont des remises sur le matériel chez notre partenaire <a href={href('/club/#partenaires')}>Interglace</a>.
+          </p>
+        </div>
+      </div>
+      <p>Le détail est dans le <a href={href('/inscription/reglement/')}>règlement intérieur</a>.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .grid {
+    display: grid;
+    gap: 3rem;
+  }
+  @media (min-width: 880px) {
+    .grid {
+      grid-template-columns: 3fr 2fr;
+      gap: 4rem;
+    }
+  }
+  .venues {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 3px solid var(--navy);
+  }
+  .venues li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .venues strong {
+    font-family: var(--font-display);
+    font-size: 1.45rem;
+    text-transform: uppercase;
+    color: var(--navy);
+  }
+  .venues span {
+    color: var(--ink-soft);
+  }
+  .cols {
+    display: grid;
+    gap: 0 3rem;
+    max-width: 62rem;
+  }
+  @media (min-width: 800px) {
+    .cols {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .gear {
+    display: grid;
+    gap: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+  @media (min-width: 800px) {
+    .gear {
+      grid-template-columns: 3fr 2fr;
+      gap: 4rem;
+    }
+  }
+  .gear h3 {
+    font-size: 1.4rem;
+    color: var(--red);
+    letter-spacing: 0.06em;
+  }
+  .checklist {
+    list-style: none;
+    margin: 0 0 1rem;
+    padding: 0;
+    border-top: 2px solid var(--navy);
+  }
+  .checklist li {
+    position: relative;
+    padding: 0.6rem 0 0.6rem 2rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .checklist li::before {
+    content: '';
+    position: absolute;
+    left: 0.2rem;
+    top: 0.9rem;
+    width: 0.9rem;
+    height: 0.9rem;
+    border: 2px solid var(--navy);
+  }
+  .small {
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+  }
+</style>

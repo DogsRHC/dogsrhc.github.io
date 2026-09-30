@@ -1,0 +1,30 @@
+startYear: 2022
+division: CLRH
+summary: Deuxièmes de notre poule (4 victoires, 2 défaites). Seuls les premiers de poule allaient au carré final, remporté par Viry.
+competitions:
+  - name: CLRH
+    matches:
+      - { home: Meudon, homeScore: 9, awayScore: 2, away: Ris-Orangis }
+      - { home: Les Ulis, homeScore: 1, awayScore: 26, away: Meudon }
+      - { home: Ris-Orangis, homeScore: 3, awayScore: 14, away: Meudon }
+      - { home: Viry, homeScore: 20, awayScore: 2, away: Meudon }
+      - { home: Meudon, homeScore: 10, awayScore: 21, away: Viry }
+  - name: Match amical
+    matches:
+      - { home: Meudon, homeScore: 19, awayScore: 1, away: Asnières }
+  - name: TwentySix Inline Cup de Valence, poule
+    matches:
+      - { home: Meudon, homeScore: 3, awayScore: 4, away: Valence }
+      - { home: Lyon, homeScore: 0, awayScore: 9, away: Meudon }
+      - { home: Meudon, homeScore: 4, awayScore: 1, away: Les Irréductibles }
+      - { home: Les Astronuts, homeScore: 3, awayScore: 2, away: Meudon }
+  - name: TwentySix Inline Cup de Valence, classement
+    matches:
+      - { home: Meudon, homeScore: 3, awayScore: 2, away: Uniporn }
+      - { home: Valence, homeScore: 2, awayScore: 2, away: Meudon }
+      - { home: Meudon, homeScore: 2, awayScore: 3, away: Les Astronuts }
+      - { home: Valence, homeScore: 3, awayScore: 2, away: Meudon }
+tournaments:
+  - { name: TwentySix Inline Cup de Valence (division Guinguette), result: 4e }
+  - { name: Tournoi de Noël de Breuillet, result: 2e }
+  - { name: Tournoi de printemps de Breuillet, result: Vainqueur }

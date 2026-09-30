@@ -1,0 +1,12 @@
+startYear: 2019
+division: CLRH
+summary: Saison arrêtée en cours de route à cause de la crise sanitaire.
+competitions:
+  - name: CLRH
+    matches:
+      - { home: Meudon, homeScore: 10, awayScore: 0, away: Les Ulis }
+      - { home: Meudon, homeScore: 11, awayScore: 1, away: Breuillet-Brétigny }
+      - { home: Les Ulis, homeScore: 0, awayScore: 19, away: Meudon }
+      - { home: Meudon, homeScore: 14, awayScore: 4, away: Red Sharks }
+      - { home: Meudon, homeScore: 5, awayScore: 0, away: Breuillet-Brétigny }
+      - { home: Dourdan, homeScore: 0, awayScore: 8, away: Meudon }

@@ -1,0 +1,10 @@
+startYear: 2013
+competitions:
+  - name: Matchs
+    matches:
+      - { date: 2013-12-22, home: Les Ulis, homeScore: 7, awayScore: 9, away: Meudon }
+      - { date: 2014-01-12, home: Antony, homeScore: 6, awayScore: 7, away: Meudon }
+      - { date: 2014-03-16, home: Antony, homeScore: 2, awayScore: 8, away: Meudon }
+      - { date: 2014-04-09, home: Breuillet, homeScore: 5, awayScore: 14, away: Meudon }
+tournaments:
+  - { date: 2014-04-28, name: Tournoi des Ulis, result: 1er }

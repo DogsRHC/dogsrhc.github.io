@@ -1,0 +1,393 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Banners from '../components/Banners.astro';
+import TrainingBoard from '../components/TrainingBoard.astro';
+import heroPhoto from '../assets/photos/album-060.jpg';
+import { site } from '../config/site';
+import { getHonours, getNews, getPartners, getPhotos, getSeasons, getTrainings, getUpcomingEvents } from '../lib/data';
+import { formatDate, formatTime, href, seasonLabel } from '../lib/format';
+
+const news = (await getNews()).slice(0, 3);
+const { titles } = await getHonours();
+const seasons = (await getSeasons()).slice(0, 4);
+const events = (await getUpcomingEvents()).slice(0, 4);
+const partners = await getPartners();
+const strip = (await getPhotos()).slice(0, 4);
+const age = new Date().getFullYear() - site.founded;
+const trainingCount = (await getTrainings()).length;
+const perWeek = ['', 'une fois', 'deux fois', 'trois fois', 'quatre fois'][trainingCount] ?? `${trainingCount} fois`;
+---
+
+<Base>
+  <section class="hero on-dark">
+    <Image src={heroPhoto} alt="Les Dogs en maillot marine, regroupés devant leur cage avant une rencontre" widths={[800, 1280, 1600]} sizes="100vw" loading="eager" fetchpriority="high" class="hero__img" />
+    <div class="wrap hero__inner">
+      <div class="hero__panel">
+        <p class="kicker">Meudon-la-Forêt · depuis {site.founded}</p>
+        <h1>Du roller hockey à Meudon, depuis {age} ans.</h1>
+        <p class="hero__text">
+          Une bande de passionnés venus du hockey sur glace et du street hockey, devenue un club engagé en championnat régional.
+          On s'entraîne {perWeek} par semaine, dans la bonne humeur et sans se prendre la tête.
+        </p>
+        <div class="btn-row">
+          {site.registration.open && <a class="btn" href={href('/inscription/')}>S'inscrire pour {site.registration.season}</a>}
+          <a class="btn btn--ghost" href={href('/entrainements/')}>Venir à un entraînement</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="stripes"></div>
+
+  <section class="section">
+    <div class="wrap split">
+      <div>
+        <p class="kicker">Les créneaux</p>
+        <h2>Où et quand</h2>
+        <p>
+          Il faut savoir tenir sur des rollers, le reste s'apprend sur place. Le club accueille les joueurs à partir
+          de {site.registration.minimumAge} ans, débutants comme confirmés, en groupe régional ou loisir.
+        </p>
+        <p><a href={href('/entrainements/')}>L'équipement à prévoir et les accès</a></p>
+      </div>
+      <TrainingBoard />
+    </div>
+  </section>
+
+  {events.length > 0 && (
+    <section class="section section--ice">
+      <div class="wrap">
+        <p class="kicker">Agenda</p>
+        <h2>Prochains rendez-vous</h2>
+        <ul class="agenda">
+          {events.map((e) => (
+            <li>
+              <span class="agenda__date">{formatDate(e.date, { day: 'numeric', month: 'short' })}</span>
+              <span class="agenda__what">
+                <strong>{e.title}</strong>
+                <span>{[e.time && formatTime(e.time), e.venueName].filter(Boolean).join(', ')}</span>
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <section class="section section--ice">
+    <div class="wrap">
+      <div class="head-row">
+        <div>
+          <p class="kicker">Les news</p>
+          <h2>Quoi de neuf chez les Dogs</h2>
+        </div>
+        <a href={href('/actus/')}>Toutes les actus</a>
+      </div>
+      <div class="news">
+        {news.map((n, i) => (
+          <article class:list={['news__item', i === 0 && 'news__item--lead']}>
+            {i === 0 && n.data.image && (
+              <Image src={n.data.image} alt={n.data.imageAlt ?? ''} widths={[600, 900]} sizes="(min-width: 900px) 560px, 100vw" class="news__img" />
+            )}
+            <div>
+              <time datetime={n.data.date.toISOString().slice(0, 10)}>{formatDate(n.data.date)}</time>
+              <h3><a href={href(`/actus/${n.id}/`)}>{n.data.title}</a></h3>
+              {n.data.summary && <p>{n.data.summary}</p>}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--navy palmares">
+    <div class="wrap">
+      <div class="head-row">
+        <div>
+          <p class="kicker">Palmarès</p>
+          <h2>{titles.length} titres de champion CLRH</h2>
+        </div>
+        <a class="on-navy" href={href('/resultats/')}>Tous les résultats depuis 2012</a>
+      </div>
+      <Banners />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <p class="kicker">Saison par saison</p>
+      <h2>Les dernières saisons</h2>
+      <ol class="recent">
+        {seasons.map((s) => (
+          <li>
+            <a href={href(`/resultats/#saison-${s.data.startYear}`)} class="recent__season tabnum">{seasonLabel(s.data.startYear)}</a>
+            <span class="recent__div">{s.data.division}</span>
+            <span class="recent__txt">{s.data.honourLabel ?? s.data.summary}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="strip" aria-label="Quelques photos du club">
+    {strip.map((p) => (
+      <a href={href('/photos/')}><Image src={p.data.image} alt={p.data.alt} width={600} class="strip__img" /></a>
+    ))}
+  </section>
+
+  <section class="section section--ice">
+    <div class="wrap split split--cta">
+      <div>
+        <h2>Envie de chausser les rollers ?</h2>
+        <p class="lead">
+          Inscription en ligne sur HelloAsso. Si tu hésites, le coach peut te proposer une séance d'essai pour voir où tu en es.
+        </p>
+        <div class="btn-row">
+          <a class="btn" href={href('/inscription/')}>Comment s'inscrire</a>
+          <a class="btn btn--ghost" href={href('/contact/')}>Poser une question</a>
+        </div>
+      </div>
+      <div class="thanks">
+        <p class="kicker">Ils nous soutiennent</p>
+        <ul>
+          {partners.map((p) => (
+            <li><a href={p.data.url} rel="noopener">{p.data.name}</a><span>{p.data.description}</span></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: min(88vh, 760px);
+    display: flex;
+    align-items: flex-end;
+    background: var(--navy-deep);
+    overflow: hidden;
+  }
+  .hero__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 60% 30%;
+  }
+  .hero__inner {
+    position: relative;
+    padding-block: 4rem 3rem;
+  }
+  .hero__panel {
+    background: var(--navy);
+    color: #fff;
+    max-width: 640px;
+    padding: clamp(1.5rem, 4vw, 2.75rem);
+    border-left: 8px solid var(--red);
+  }
+  .hero__panel h1 {
+    color: #fff;
+    font-size: clamp(2.5rem, 6.5vw, 4.4rem);
+  }
+  .hero__text {
+    font-size: 1.15rem;
+    color: #e3e9f4;
+    margin-bottom: 1.6rem;
+  }
+  .hero .kicker {
+    color: var(--husky);
+  }
+
+  .split {
+    display: grid;
+    gap: 2.5rem;
+  }
+  @media (min-width: 880px) {
+    .split {
+      grid-template-columns: 5fr 6fr;
+      gap: 4rem;
+      align-items: start;
+    }
+  }
+
+  .head-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 0.5rem 2rem;
+    margin-bottom: 2rem;
+  }
+  .head-row h2 {
+    margin-bottom: 0;
+  }
+  .head-row > a {
+    font-weight: 600;
+  }
+  .on-navy {
+    color: #fff;
+  }
+  .on-navy:hover {
+    color: var(--husky);
+  }
+
+  .news {
+    display: grid;
+    gap: 2rem;
+  }
+  @media (min-width: 900px) {
+    .news {
+      grid-template-columns: 1.4fr 1fr;
+      grid-template-rows: auto auto;
+    }
+    .news__item--lead {
+      grid-row: span 2;
+    }
+  }
+  .news__item {
+    border-top: 3px solid var(--navy);
+    padding-top: 1rem;
+  }
+  .news__item h3 {
+    font-size: 1.9rem;
+    margin: 0.3rem 0 0.6rem;
+  }
+  .news__item h3 a {
+    color: var(--navy);
+    text-decoration: none;
+  }
+  .news__item h3 a:hover {
+    color: var(--red);
+  }
+  .news__item time {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--red);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .news__img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    margin-bottom: 1rem;
+  }
+
+  .agenda {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+  .agenda li {
+    display: flex;
+    gap: 1.25rem;
+    align-items: center;
+    background: #fff;
+    padding: 0.9rem 1.2rem;
+    border-left: 5px solid var(--red);
+  }
+  .agenda__date {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    color: var(--navy);
+    min-width: 5.5rem;
+  }
+  .agenda__what {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .palmares h2 {
+    color: #fff;
+  }
+
+  .recent {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 3px solid var(--navy);
+  }
+  .recent li {
+    display: grid;
+    grid-template-columns: 8.5rem 1fr;
+    gap: 0.25rem 1.5rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  @media (min-width: 720px) {
+    .recent li {
+      grid-template-columns: 9rem 11rem 1fr;
+      align-items: baseline;
+    }
+  }
+  .recent__season {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 1.6rem;
+    color: var(--navy);
+    text-decoration: none;
+  }
+  .recent__div {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--red);
+  }
+  .recent__txt {
+    grid-column: 1 / -1;
+  }
+  @media (min-width: 720px) {
+    .recent__txt {
+      grid-column: auto;
+    }
+  }
+
+  .strip {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (min-width: 720px) {
+    .strip {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  .strip__img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    transition: opacity 0.2s;
+  }
+  .strip a:hover .strip__img {
+    opacity: 0.85;
+  }
+
+  .thanks ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .thanks li {
+    display: flex;
+    flex-direction: column;
+    padding: 0.9rem 0;
+    border-top: 1px solid var(--line);
+  }
+  .thanks li a {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--navy);
+  }
+  .thanks li span {
+    color: var(--ink-soft);
+  }
+</style>

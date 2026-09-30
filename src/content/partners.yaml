@@ -1,0 +1,10 @@
+- id: meudon
+  order: 1
+  name: Ville de Meudon
+  url: https://www.meudon.fr/
+  description: La mairie nous accueille au gymnase Pierre et Marie Curie et nous a ouvert un créneau en gymnase couvert.
+- id: interglace
+  order: 2
+  name: Interglace
+  url: https://www.interglace.fr/
+  description: Le magasin fournit nos tenues de match et fait des remises sur le matériel de hockey aux adhérents.

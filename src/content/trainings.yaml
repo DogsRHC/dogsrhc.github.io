@@ -1,0 +1,11 @@
+# Créneaux d'entraînement de la saison en cours (heures au format HH:MM).
+- id: mardi-soir
+  day: mardi
+  start: "20:30"
+  end: "22:15"
+  venue: renee-leduc
+- id: samedi-aprem
+  day: samedi
+  start: "14:00"
+  end: "16:30"
+  venue: pierre-et-marie-curie

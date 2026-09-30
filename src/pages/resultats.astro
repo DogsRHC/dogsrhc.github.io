@@ -1,0 +1,140 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import Banners from '../components/Banners.astro';
+import SeasonSheet from '../components/SeasonSheet.astro';
+import { getHonours, getSeasons, record } from '../lib/data';
+import { seasonLabel } from '../lib/format';
+
+const seasons = await getSeasons();
+const { titles, runnersUp } = await getHonours();
+const oldest = seasons.at(-1)?.data.startYear;
+---
+
+<Base title="Résultats et palmarès" description={`Tous les résultats des Dogs de Meudon depuis ${oldest} : ${titles.length} titres de champion CLRH.`}>
+  <PageHead kicker="Palmarès" title="Résultats" intro={`${titles.length} titres de champion CLRH, ${runnersUp.length} places de vice-champion, et tous nos scores depuis la saison ${oldest ? seasonLabel(oldest) : ''}.`} />
+
+  <section class="section section--navy">
+    <div class="wrap">
+      <Banners />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <nav class="jump" aria-label="Aller à une saison">
+        {seasons.map((s) => <a href={`#saison-${s.data.startYear}`} class="tabnum">{seasonLabel(s.data.startYear)}</a>)}
+      </nav>
+
+      <div class="seasons">
+        {seasons.map((s, i) => {
+          const all = s.data.competitions.flatMap((c) => c.matches);
+          const r = record(all);
+          return (
+            <details class="season" id={`saison-${s.data.startYear}`} open={i === 0}>
+              <summary>
+                <span class="season__label tabnum">{seasonLabel(s.data.startYear)}</span>
+                <span class="season__meta">
+                  {s.data.division && <span class="season__div">{s.data.division}</span>}
+                  {s.data.honourLabel && <span class:list={['season__honour', s.data.honour === 'champion' && 'is-champion']}>{s.data.honourLabel}</span>}
+                  {r.played > 0 && <span class="season__rec tabnum">{r.played} matchs · {r.w} V{r.d > 0 ? ` · ${r.d} N` : ''} · {r.l} D</span>}
+                </span>
+              </summary>
+              <SeasonSheet season={s} />
+            </details>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 2rem;
+  }
+  .jump a {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.05rem;
+    padding: 0.35rem 0.6rem;
+    border: 1px solid var(--line);
+    color: var(--navy);
+    text-decoration: none;
+  }
+  .jump a:hover {
+    border-color: var(--navy);
+  }
+  .season {
+    border-top: 3px solid var(--navy);
+    padding-block: 0.4rem 1rem;
+    scroll-margin-top: 1rem;
+  }
+  .season:last-child {
+    border-bottom: 3px solid var(--navy);
+  }
+  .season summary {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.4rem 1.5rem;
+    padding: 0.6rem 0;
+  }
+  .season summary::-webkit-details-marker {
+    display: none;
+  }
+  .season summary::after {
+    content: '+';
+    margin-left: auto;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 2rem;
+    line-height: 1;
+    color: var(--red);
+  }
+  .season[open] summary::after {
+    content: '\2212';
+  }
+  .season__label {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 2.3rem;
+    line-height: 1;
+    color: var(--navy);
+  }
+  .season__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1rem;
+    align-items: baseline;
+  }
+  .season__div {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .season__honour {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.2rem 0.5rem;
+    background: var(--navy-soft);
+    color: #fff;
+  }
+  .season__honour.is-champion {
+    background: var(--red);
+  }
+  .season__rec {
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+  }
+</style>

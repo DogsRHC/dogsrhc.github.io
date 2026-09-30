@@ -1,0 +1,74 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import { getNews } from '../../lib/data';
+import { formatDate, href } from '../../lib/format';
+
+const news = await getNews();
+---
+
+<Base title="Actus" description="Les nouvelles du club de roller hockey de Meudon : saison, inscriptions, résultats.">
+  <PageHead kicker="Les news" title="Actus" intro="Ce qui se passe au club, saison après saison." />
+  <section class="section">
+    <div class="wrap">
+      <ul class="list">
+        {news.map((n) => (
+          <li>
+            <article class:list={['item', n.data.image && 'has-img']}>
+              {n.data.image && <Image src={n.data.image} alt={n.data.imageAlt ?? ''} width={480} class="item__img" />}
+              <div>
+                <time datetime={n.data.date.toISOString().slice(0, 10)}>{formatDate(n.data.date)}</time>
+                <h2><a href={href(`/actus/${n.id}/`)}>{n.data.title}</a></h2>
+                {n.data.summary && <p>{n.data.summary}</p>}
+              </div>
+            </article>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .item {
+    display: grid;
+    gap: 1.25rem;
+    padding: 1.75rem 0;
+    border-top: 3px solid var(--navy);
+  }
+  @media (min-width: 760px) {
+    .item.has-img {
+      grid-template-columns: 320px 1fr;
+      gap: 2.5rem;
+    }
+  }
+  .item__img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+  }
+  time {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--red);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  h2 {
+    font-size: 2.1rem;
+    margin: 0.3rem 0 0.6rem;
+  }
+  h2 a {
+    color: var(--navy);
+    text-decoration: none;
+  }
+  h2 a:hover {
+    color: var(--red);
+  }
+</style>

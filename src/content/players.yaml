@@ -1,0 +1,19 @@
+# Effectif. position : gardien | défenseur | attaquant | coach
+- { id: eric, name: Eric, number: 1, position: coach }
+- { id: antoine, name: Antoine, number: 35, position: gardien }
+- { id: mickael, name: Mickael, number: 21, position: défenseur }
+- { id: nicolas-bm, name: Nicolas BM, number: 71, position: défenseur }
+- { id: nicolas-l, name: Nicolas L, number: 9, position: défenseur }
+- { id: marc, name: Marc, number: 17, position: défenseur }
+- { id: gerald, name: Gérald, number: 62, position: défenseur }
+- { id: david, name: David, number: 27, position: défenseur }
+- { id: nicolas-s, name: Nicolas S, number: 75, position: défenseur }
+- { id: thomas, name: Thomas, number: 74, position: défenseur }
+- { id: alexis, name: Alexis, number: 7, position: attaquant }
+- { id: andre, name: André, number: 88, position: attaquant }
+- { id: anthony, name: Anthony, number: 13, position: attaquant }
+- { id: matthieu-d, name: Matthieu D, number: 3, position: attaquant }
+- { id: cedric, name: Cédric, number: 39, position: attaquant }
+- { id: matthieu-h, name: Matthieu H, number: 25, position: attaquant }
+- { id: come, name: Côme, number: 90, position: attaquant }
+- { id: christophe, name: Christophe, number: 42, position: attaquant }

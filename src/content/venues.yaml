@@ -1,0 +1,12 @@
+# Lieux d'entraînement et de match. L'id sert de référence dans trainings.yaml et events.yaml.
+- id: pierre-et-marie-curie
+  name: Gymnase Pierre et Marie Curie
+  street: Avenue Henri Dalsème
+  postcode: "92360"
+  city: Meudon
+  district: Meudon-la-Forêt
+- id: renee-leduc
+  name: Gymnase Renée Leduc
+  postcode: "92360"
+  city: Meudon
+  district: Meudon-la-Forêt

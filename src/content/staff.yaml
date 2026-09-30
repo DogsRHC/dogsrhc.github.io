@@ -1,0 +1,21 @@
+# Bureau et responsables. `phone` n'est publié que s'il est renseigné (avec l'accord de la personne).
+- id: president
+  order: 1
+  role: Président
+  name: David Atlan
+- id: secretaire
+  order: 2
+  role: Secrétaire
+  name: Alexis Perez
+- id: tresorier
+  order: 3
+  role: Trésorier
+  name: Nicolas Barissat
+- id: coach
+  order: 4
+  role: Coach et communication
+  name: André Vieira
+- id: matchs
+  order: 5
+  role: Organisation des matchs
+  name: Marc Berger

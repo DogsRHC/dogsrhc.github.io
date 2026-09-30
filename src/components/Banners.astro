@@ -1,0 +1,99 @@
+---
+// Bannières de titres, à la manière de celles qu'on suspend au plafond des patinoires.
+// Calculées depuis src/content/seasons (champ `honour`) : rien à mettre à jour ici.
+import { getHonours } from '../lib/data';
+import { seasonShort } from '../lib/format';
+
+interface Props {
+  showRunnersUp?: boolean;
+}
+const { showRunnersUp = true } = Astro.props;
+const { titles, runnersUp } = await getHonours();
+const banners = [
+  ...titles.map((s) => ({ year: s.data.startYear, kind: 'champion' as const })),
+  ...(showRunnersUp ? runnersUp.map((s) => ({ year: s.data.startYear, kind: 'vice' as const })) : []),
+].sort((a, b) => a.year - b.year);
+---
+
+<ul class="rafters" aria-label="Palmarès">
+  {banners.map((b) => (
+    <li class:list={['banner', `banner--${b.kind}`]}>
+      <span class="banner__label">{b.kind === 'champion' ? 'Champions' : 'Vice-champions'}</span>
+      <span class="banner__comp">CLRH</span>
+      <span class="banner__year">{seasonShort(b.year)}</span>
+      <span class="banner__star" aria-hidden="true">{b.kind === 'champion' ? '★' : ''}</span>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .rafters {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+    gap: 1rem 0.9rem;
+    position: relative;
+  }
+  .banner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1.2rem 0.5rem 2.6rem;
+    min-height: 208px;
+    clip-path: polygon(0 0, 100% 0, 100% 86%, 50% 100%, 0 86%);
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    line-height: 1;
+  }
+  /* la tringle */
+  .banner::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 8px;
+    background: var(--red);
+  }
+  .banner--champion {
+    background: #fff;
+    color: var(--navy);
+    box-shadow: inset 0 0 0 4px #fff, inset 0 0 0 7px var(--navy);
+  }
+  .banner--vice {
+    background: var(--navy-soft);
+    color: #fff;
+  }
+  .banner--vice::before {
+    background: var(--husky);
+  }
+  .banner__label {
+    font-weight: 800;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    margin-top: 0.4rem;
+  }
+  .banner__comp {
+    font-weight: 900;
+    font-size: 2.4rem;
+    margin-top: 0.35rem;
+    color: var(--red);
+  }
+  .banner--vice .banner__comp {
+    color: var(--husky);
+  }
+  .banner__year {
+    font-weight: 900;
+    font-size: 1.85rem;
+    margin-top: 0.4rem;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .banner__star {
+    font-size: 1.3rem;
+    color: var(--red);
+    margin-top: 0.5rem;
+  }
+</style>

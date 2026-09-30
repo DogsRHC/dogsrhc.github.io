@@ -1,0 +1,23 @@
+startYear: 2021
+division: CLRH
+honour: champion
+honourLabel: Champion CLRH
+competitions:
+  - name: CLRH
+    matches:
+      - { home: Brétigny, homeScore: 6, awayScore: 4, away: Meudon }
+      - { home: Meudon, homeScore: 7, awayScore: 2, away: Melun }
+      - { home: Melun, homeScore: 5, awayScore: 8, away: Meudon }
+      - { home: Meudon, homeScore: 3, awayScore: 4, away: Ris-Orangis }
+      - { home: Dourdan, homeScore: 0, awayScore: 10, away: Meudon }
+      - { home: Meudon, homeScore: 11, awayScore: 3, away: Breuillet }
+      - { home: Meudon, homeScore: 8, awayScore: 2, away: Breuillet }
+      - { home: Brétigny, homeScore: 3, awayScore: 4, away: Meudon }
+      - { home: Meudon, away: Dourdan, note: annulé }
+      - { home: Ris-Orangis, away: Meudon, note: annulé }
+  - name: Demi-finale
+    matches:
+      - { home: Viarmes, homeScore: 1, awayScore: 4, away: Meudon }
+  - name: Finale
+    matches:
+      - { home: Meudon, homeScore: 5, awayScore: 4, away: Ris-Orangis }

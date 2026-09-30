@@ -1,0 +1,11 @@
+startYear: 2012
+competitions:
+  - name: Matchs
+    matches:
+      - { date: 2012-10-14, home: Antony, homeScore: 8, awayScore: 18, away: Meudon }
+      - { date: 2012-11-04, home: Breuillet, homeScore: 7, awayScore: 4, away: Meudon }
+      - { date: 2012-11-25, home: Antony, homeScore: 5, awayScore: 12, away: Meudon }
+tournaments:
+  - { date: 2012-12-26, name: Tournoi de Breuillet, result: 4e }
+  - { date: 2013-06-08, name: Tournoi de Meudon, result: 1er et 3e }
+  - { date: 2013-08-10, name: Tournoi de Breuillet, result: 2e }

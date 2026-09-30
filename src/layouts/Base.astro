@@ -1,0 +1,67 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../config/site';
+import { href } from '../lib/format';
+import ogDefault from '../assets/photos/album-060.jpg';
+import { getImage } from 'astro:assets';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: ImageMetadata;
+}
+
+const { title, description = site.description, ogImage = ogDefault } = Astro.props;
+const fullTitle = title ? `${title} | ${site.name}, roller hockey à ${site.city}` : `${site.fullName}`;
+const og = await getImage({ src: ogImage, width: 1200, format: 'jpg' });
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+const ogUrl = Astro.site ? new URL(og.src, Astro.site).href : undefined;
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <link rel="icon" type="image/png" href={href('/favicon.png')} />
+    <link rel="apple-touch-icon" href={href('/apple-touch-icon.png')} />
+    <meta name="theme-color" content="#0e1a4b" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content={site.fullName} />
+    <meta property="og:title" content={title ?? site.fullName} />
+    <meta property="og:description" content={description} />
+    {ogUrl && <meta property="og:image" content={ogUrl} />}
+    {canonical && <meta property="og:url" content={canonical} />}
+    <meta name="generator" content={Astro.generator} />
+  </head>
+  <body>
+    <a class="skip" href="#contenu">Aller au contenu</a>
+    <Header />
+    <main id="contenu">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .skip {
+    position: absolute;
+    left: 1rem;
+    top: -4rem;
+    z-index: 100;
+    background: #fff;
+    color: var(--navy);
+    padding: 0.6rem 1rem;
+    font-weight: 600;
+  }
+  .skip:focus {
+    top: 1rem;
+  }
+</style>

@@ -1,0 +1,22 @@
+startYear: 2014
+division: CLRH
+honour: champion
+honourLabel: Champion CLRH
+competitions:
+  - name: CLRH
+    matches:
+      - { home: Meudon, homeScore: 7, awayScore: 2, away: Antony }
+      - { home: Meudon, homeScore: 3, awayScore: 1, away: Breuillet }
+      - { home: Meudon, homeScore: 19, awayScore: 0, away: Boutigny }
+      - { home: Meudon, homeScore: 7, awayScore: 8, away: Les Ulis }
+      - { home: Meudon, homeScore: 2, awayScore: 8, away: Dourdan }
+      - { home: Meudon, homeScore: 14, awayScore: 2, away: Viarmes }
+      - { home: Meudon, homeScore: 2, awayScore: 6, away: La Verrière }
+      - { home: Meudon, homeScore: 12, awayScore: 3, away: Château-Landon }
+  - name: Carré final
+    matches:
+      - { home: Meudon, homeScore: 6, awayScore: 4, away: Les Ulis }
+      - { home: Meudon, homeScore: 6, awayScore: 4, away: La Verrière }
+  - name: Match amical
+    matches:
+      - { home: Meudon, homeScore: 4, awayScore: 5, away: Paris XIII }

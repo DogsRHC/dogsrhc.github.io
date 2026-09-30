@@ -1,0 +1,121 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo-dogs.png';
+import { nav, site } from '../config/site';
+import { getTrainings } from '../lib/data';
+import { formatTime, href, mapUrl } from '../lib/format';
+
+const trainings = await getTrainings();
+const year = new Date().getFullYear();
+---
+
+<footer class="foot">
+  <div class="stripes"></div>
+  <div class="wrap grid">
+    <div class="id">
+      <Image src={logo} alt="Logo des Dogs : un husky, une crosse et un palet" width={120} height={119} class="logo" />
+      <p>
+        <strong>{site.fullName}</strong><br />
+        Association loi 1901, {site.district}, depuis {site.founded}.
+      </p>
+    </div>
+
+    <div>
+      <h2 class="foot__title">On s'entraîne</h2>
+      <ul class="plain">
+        {trainings.map((t) => (
+          <li>
+            <span class="day">{t.day}</span> {formatTime(t.start)} à {formatTime(t.end)}<br />
+            <a href={mapUrl(`${t.venue.name} ${t.venue.postcode} ${t.venue.city}`)}>{t.venue.name}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="foot__title">Nous joindre</h2>
+      <ul class="plain">
+        <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+        <li><a href={site.social.facebook} rel="noopener">Facebook</a></li>
+        <li><a href={site.social.instagram} rel="noopener">Instagram</a></li>
+      </ul>
+    </div>
+
+    <nav aria-label="Plan du site">
+      <h2 class="foot__title">Le site</h2>
+      <ul class="plain cols">
+        <li><a href={href('/')}>Accueil</a></li>
+        {nav.map((item) => <li><a href={href(item.href)}>{item.label}</a></li>)}
+        <li><a href={href('/inscription/')}>Inscription</a></li>
+        <li><a href={href('/mentions-legales/')}>Mentions légales</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="wrap legal">
+    <span>© {year} {site.name}. Photos et textes du club, merci de demander avant de les réutiliser.</span>
+  </div>
+</footer>
+
+<style>
+  .foot {
+    background: var(--navy-deep);
+    color: #dfe6f2;
+    font-size: 0.98rem;
+  }
+  .grid {
+    display: grid;
+    gap: 2rem;
+    padding-block: 3rem 2rem;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 720px) {
+    .grid {
+      grid-template-columns: 1.3fr 1fr 1fr 1fr;
+    }
+  }
+  .logo {
+    width: 88px;
+    background: #fff;
+    border-radius: 50%;
+    padding: 6px;
+    margin-bottom: 1rem;
+  }
+  .foot a {
+    color: #fff;
+  }
+  .foot a:hover {
+    color: var(--husky);
+  }
+  .foot__title {
+    color: #fff;
+    font-size: 1.25rem;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.8rem;
+  }
+  .plain {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .plain li {
+    margin-bottom: 0.6rem;
+  }
+  .day {
+    text-transform: capitalize;
+    font-weight: 600;
+    color: #fff;
+  }
+  .cols {
+    columns: 2;
+    column-gap: 1rem;
+  }
+  .cols li {
+    break-inside: avoid;
+  }
+  .legal {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-block: 1.25rem 1.75rem;
+    font-size: 0.85rem;
+    color: #9aa6c4;
+  }
+</style>

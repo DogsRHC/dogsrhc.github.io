@@ -1,0 +1,24 @@
+startYear: 2017
+division: CLRH
+honour: vice-champion
+honourLabel: Vice-champion CLRH
+summary: Vice-champion du CLRH selon le classement officiel.
+competitions:
+  - name: CLRH
+    matches:
+      - { home: Meudon, homeScore: 6, awayScore: 2, away: Breuillet-Brétigny }
+      - { home: Meudon, homeScore: 5, awayScore: 4, away: Boutigny }
+      - { home: Meudon, homeScore: 4, awayScore: 1, away: Les Ulis }
+      - { home: Meudon, homeScore: 12, awayScore: 0, away: Dourdan }
+      - { home: Meudon, away: Aubergenville, note: score non communiqué }
+      - { home: Meudon, homeScore: 7, awayScore: 9, away: Viarmes }
+      - { home: Meudon, homeScore: 8, awayScore: 3, away: RSI }
+      - { home: Meudon, homeScore: 9, awayScore: 8, away: Blanc-Mesnil }
+      - { home: Meudon, homeScore: 5, awayScore: 0, away: Paris XIII, note: forfait }
+      - { home: Meudon, homeScore: 5, awayScore: 0, away: Antony, note: forfait }
+      - { home: Meudon, homeScore: 3, awayScore: 0, away: Combs-la-Ville }
+      - { home: Meudon, homeScore: 5, awayScore: 3, away: La Verrière }
+      - { home: Meudon, homeScore: 5, awayScore: 1, away: Élancourt }
+      - { home: Meudon, homeScore: 15, awayScore: 2, away: Sainte-Geneviève }
+      - { home: Meudon, away: Panthères, note: annulé }
+      - { home: Meudon, away: Ris-Orangis, note: annulé }
