@@ -21,9 +21,22 @@ const ogUrl = Astro.site ? new URL(og.src, Astro.site).href : undefined;
 ---
 
 <!doctype html>
-<html lang="fr">
+<html lang="fr" data-theme="light">
   <head>
     <meta charset="utf-8" />
+    <script is:inline>
+      // Thème (DA claire / sombre) appliqué avant l'affichage pour éviter un flash.
+      // Priorité : ?theme=dark|light dans l'URL (lien de comparaison), puis choix mémorisé.
+      (function () {
+        var t;
+        try {
+          t = new URLSearchParams(location.search).get('theme');
+          if (t === 'dark' || t === 'light') localStorage.setItem('dogs-theme', t);
+          else t = localStorage.getItem('dogs-theme');
+        } catch (e) {}
+        if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
@@ -56,8 +69,8 @@ const ogUrl = Astro.site ? new URL(og.src, Astro.site).href : undefined;
     left: 1rem;
     top: -4rem;
     z-index: 100;
-    background: #fff;
-    color: var(--navy);
+    background: var(--surface);
+    color: var(--heading);
     padding: 0.6rem 1rem;
     font-weight: 600;
   }

@@ -11,17 +11,12 @@
 @import '@fontsource/barlow/600';
 
 :root {
+  /* Couleurs de marque (identiques dans les deux thèmes) */
   --navy: #0e1a4b;
-  --navy-deep: #08102f;
   --navy-soft: #1f2d6b;
   --red: #b3141d;
   --red-dark: #8e0f16;
-  --ice: #eef2f7;
   --husky: #c9dbeb;
-  --paper: #ffffff;
-  --ink: #111735;
-  --ink-soft: #4a5170;
-  --line: #d6dce8;
 
   --font-display: 'Big Shoulders Display', 'Arial Narrow', sans-serif;
   --font-body: 'Barlow', system-ui, sans-serif;
@@ -29,6 +24,52 @@
   --wrap: 1180px;
   --gutter: clamp(16px, 4vw, 40px);
   --radius: 3px;
+}
+
+/* Deux directions artistiques, mêmes rôles de couleur.
+   Le thème est posé sur <html data-theme="light|dark"> (voir Base.astro). */
+
+/* DA claire : fond blanc, bandeaux marine */
+:root,
+:root[data-theme='light'] {
+  color-scheme: light;
+  --paper: #ffffff; /* fond de page */
+  --ice: #eef2f7; /* sections alternées */
+  --surface: #ffffff; /* cartes posées sur les sections alternées */
+  --ink: #111735; /* texte courant */
+  --ink-soft: #4a5170;
+  --heading: var(--navy);
+  --rule: var(--navy); /* filets épais */
+  --line: #d6dce8; /* séparateurs fins */
+  --accent: var(--red); /* rouge utilisé en texte */
+  --accent-strong: var(--red-dark);
+  --band: var(--navy); /* bandeaux sombres : en-tête, titres de page, palmarès */
+  --navy-deep: #08102f; /* pied de page */
+  --stripe-light: #ffffff;
+  --pill-win-bg: var(--navy);
+  --pill-win-fg: #ffffff;
+  --photo-filter: none;
+}
+
+/* DA sombre : la salle la nuit, fond marine presque noir, lignes bleu glace */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --paper: #0a0f24;
+  --ice: #0f1733;
+  --surface: #161f45;
+  --ink: #d9e0ee;
+  --ink-soft: #98a4c3;
+  --heading: #ffffff;
+  --rule: #3a4b91;
+  --line: rgba(201, 219, 235, 0.14);
+  --accent: #f0434c;
+  --accent-strong: #ff7178;
+  --band: #141d4b;
+  --navy-deep: #05081a;
+  --stripe-light: #c9d6ea;
+  --pill-win-bg: var(--husky);
+  --pill-win-fg: var(--navy);
+  --photo-filter: brightness(0.82) saturate(0.92);
 }
 
 *,
@@ -58,14 +99,18 @@ img {
   height: auto;
   display: block;
 }
+/* Les photos sont légèrement éteintes en DA sombre pour ne pas éblouir. */
+main img {
+  filter: var(--photo-filter);
+}
 
 a {
-  color: var(--red);
+  color: var(--accent);
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
 }
 a:hover {
-  color: var(--red-dark);
+  color: var(--accent-strong);
 }
 
 :focus-visible {
@@ -83,7 +128,7 @@ h4 {
   letter-spacing: 0.005em;
   margin: 0 0 0.5em;
   text-transform: uppercase;
-  color: var(--navy);
+  color: var(--heading);
 }
 h1 {
   font-size: clamp(2.6rem, 7vw, 5.2rem);
@@ -113,7 +158,7 @@ p {
   background: var(--ice);
 }
 .section--navy {
-  background: var(--navy);
+  background: var(--band);
   color: #fff;
 }
 .section--navy h2,
@@ -129,7 +174,7 @@ p {
   font-size: 1rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--red);
+  color: var(--accent);
   margin-bottom: 0.6rem;
 }
 .section--navy .kicker {
@@ -164,16 +209,16 @@ p {
   height: 22px;
   background: linear-gradient(
     to bottom,
-    var(--navy) 0 6px,
-    #fff 6px 9px,
+    var(--band) 0 6px,
+    var(--stripe-light) 6px 9px,
     var(--red) 9px 13px,
-    #fff 13px 16px,
-    var(--navy) 16px 22px
+    var(--stripe-light) 13px 16px,
+    var(--band) 16px 22px
   );
 }
 .stripes--thin {
   height: 10px;
-  background: linear-gradient(to bottom, var(--red) 0 4px, #fff 4px 6px, var(--navy) 6px 10px);
+  background: linear-gradient(to bottom, var(--red) 0 4px, var(--stripe-light) 4px 6px, var(--band) 6px 10px);
 }
 
 .btn {
@@ -201,13 +246,13 @@ p {
 }
 .btn--ghost {
   background: transparent;
-  color: var(--navy);
-  border-color: var(--navy);
+  color: var(--heading);
+  border-color: var(--heading);
 }
 .btn--ghost:hover {
-  background: var(--navy);
-  border-color: var(--navy);
-  color: #fff;
+  background: var(--heading);
+  border-color: var(--heading);
+  color: var(--paper);
 }
 .section--navy .btn--ghost,
 .on-dark .btn--ghost {
@@ -227,7 +272,7 @@ p {
 }
 
 .page-head {
-  background: var(--navy);
+  background: var(--band);
   color: #fff;
   padding-block: clamp(2.5rem, 6vw, 4.5rem) clamp(2rem, 4vw, 3rem);
 }

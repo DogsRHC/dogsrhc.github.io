@@ -62,19 +62,19 @@ const oldest = seasons.at(-1)?.data.startYear;
     font-size: 1.05rem;
     padding: 0.35rem 0.6rem;
     border: 1px solid var(--line);
-    color: var(--navy);
+    color: var(--heading);
     text-decoration: none;
   }
   .jump a:hover {
-    border-color: var(--navy);
+    border-color: var(--rule);
   }
   .season {
-    border-top: 3px solid var(--navy);
+    border-top: 3px solid var(--rule);
     padding-block: 0.4rem 1rem;
     scroll-margin-top: 1rem;
   }
   .season:last-child {
-    border-bottom: 3px solid var(--navy);
+    border-bottom: 3px solid var(--rule);
   }
   .season summary {
     cursor: pointer;
@@ -95,7 +95,7 @@ const oldest = seasons.at(-1)?.data.startYear;
     font-weight: 900;
     font-size: 2rem;
     line-height: 1;
-    color: var(--red);
+    color: var(--accent);
   }
   .season[open] summary::after {
     content: '\2212';
@@ -105,7 +105,7 @@ const oldest = seasons.at(-1)?.data.startYear;
     font-weight: 900;
     font-size: 2.3rem;
     line-height: 1;
-    color: var(--navy);
+    color: var(--heading);
   }
   .season__meta {
     display: flex;

@@ -1,0 +1,65 @@
+---
+// Bascule entre la DA claire et la DA sombre. Le choix est mémorisé dans le navigateur
+// (localStorage, simple confort : sans stockage, le site reste en DA claire).
+---
+
+<button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false" hidden>
+  <span class="visually-hidden">Version sombre du site</span>
+  <span class="theme-toggle__opt theme-toggle__opt--light" aria-hidden="true">Clair</span>
+  <span class="theme-toggle__opt theme-toggle__opt--dark" aria-hidden="true">Sombre</span>
+</button>
+
+<script>
+  const root = document.documentElement;
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]');
+  const sync = () => buttons.forEach((b) => b.setAttribute('aria-pressed', String(root.dataset.theme === 'dark')));
+  buttons.forEach((b) => {
+    b.hidden = false;
+    b.addEventListener('click', () => {
+      const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = next;
+      try {
+        localStorage.setItem('dogs-theme', next);
+      } catch {
+        // stockage indisponible (navigation privée...) : le choix vaut pour la page en cours
+      }
+      sync();
+    });
+  });
+  sync();
+</script>
+
+<style>
+  .theme-toggle {
+    display: inline-flex;
+    padding: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 999px;
+    background: transparent;
+    cursor: pointer;
+    font: inherit;
+  }
+  .theme-toggle[hidden] {
+    display: none;
+  }
+  .theme-toggle__opt {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1;
+    padding: 0.4rem 0.7rem 0.35rem;
+    border-radius: 999px;
+    color: var(--husky);
+    transition: background-color 0.15s, color 0.15s;
+  }
+  :global(:root[data-theme='light']) .theme-toggle__opt--light,
+  :global(:root[data-theme='dark']) .theme-toggle__opt--dark {
+    background: #fff;
+    color: var(--navy);
+  }
+  .theme-toggle:hover {
+    border-color: #fff;
+  }
+</style>

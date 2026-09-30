@@ -1,7 +1,7 @@
 # Site des Dogs de Meudon (roller hockey)
 
 Site vitrine du club, remplace l'ancien site Jimdo (dogs-rollerhockey.jimdofree.com).
-Site statique Astro 7, aucun JavaScript côté client, aucun traceur, polices auto-hébergées.
+Site statique Astro 7, aucun traceur, polices auto-hébergées. Seul JavaScript : la bascule de thème (quelques lignes).
 
 ## Commandes
 
@@ -48,7 +48,20 @@ GitHub Pages via `.github/workflows/deploy.yml` (push sur `main`, tous les lundi
 Variables du dépôt : `SITE_URL` (ex. `https://www.domaine-du-club.fr`, active sitemap et balises canoniques)
 et `BASE_PATH` (seulement sans domaine perso, ex. `/nom-du-depot`).
 
-## Identité visuelle
+## Identité visuelle et thèmes
+
+Deux directions artistiques en comparaison, basculées par le bouton « Clair | Sombre » de l'en-tête
+(`src/components/ThemeToggle.astro`), mémorisées dans `localStorage` (`dogs-theme`), forçables par
+`?theme=light|dark` dans l'URL. Le thème est posé sur `<html data-theme>` par un script inline de
+`Base.astro`, avant l'affichage.
+
+Les couleurs sont des **rôles** définis par thème dans `src/styles/global.css` : `--paper` (fond),
+`--ice` (sections alternées), `--surface` (cartes), `--ink`/`--ink-soft` (texte), `--heading`, `--rule`
+(filets épais), `--line`, `--accent` (rouge en texte), `--band` (bandeaux sombres), `--navy-deep` (pied).
+Ne jamais écrire `color: var(--navy)` ou `background: #fff` sur un fond clair : utiliser le rôle,
+sinon la DA sombre casse. Les littéraux ne sont légitimes que sur un fond fixe (bannière blanche, pastilles).
+Quand le club aura choisi, soit on supprime l'autre thème, soit on garde les deux en suivant
+`prefers-color-scheme` (une ligne dans le script de `Base.astro`).
 
 Marine `#0e1a4b`, rouge `#b3141d`, bleu husky `#c9dbeb` (tirés du logo). Titres en Big Shoulders Display,
 texte en Barlow. Motif récurrent : rayures de bas de maillot (`.stripes`). Palmarès en bannières de patinoire.
