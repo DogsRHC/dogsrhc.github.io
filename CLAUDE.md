@@ -44,9 +44,13 @@ en dur dans les `.md` supposent un site servi à la racine d'un domaine.
 
 ## Déploiement
 
-GitHub Pages via `.github/workflows/deploy.yml` (push sur `main`, tous les lundis, ou manuel).
-Variables du dépôt : `SITE_URL` (ex. `https://www.domaine-du-club.fr`, active sitemap et balises canoniques)
-et `BASE_PATH` (seulement sans domaine perso, ex. `/nom-du-depot`).
+- Dépôt : `DogsRHC/dogsrhc.github.io` (organisation GitHub du club, public ; propriétaire : Marc).
+  Un dépôt nommé `<orga>.github.io` sert le site à la racine : https://dogsrhc.github.io (pas de `BASE_PATH`).
+- GitHub Pages en mode « GitHub Actions » via `.github/workflows/deploy.yml` : push sur `main`,
+  tous les lundis 5 h UTC (agenda), ou manuel. Variable de dépôt `SITE_URL=https://dogsrhc.github.io`
+  (à changer si un domaine perso est pris, avec le réglage « Custom domain » de Pages).
+- La CI refuse de publier tant que `npm run check:release` échoue (« À COMPLÉTER », tirets longs).
+- Déployer = `git push origin main`, rien d'autre. Vérifier : onglet Actions du dépôt, puis le site.
 
 ## Identité visuelle et thèmes
 
