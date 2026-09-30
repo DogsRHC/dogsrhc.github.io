@@ -50,6 +50,11 @@ en dur dans les `.md` supposent un site servi à la racine d'un domaine.
   tous les lundis 5 h UTC (agenda), ou manuel. Variable de dépôt `SITE_URL=https://dogsrhc.github.io`
   (à changer si un domaine perso est pris, avec le réglage « Custom domain » de Pages).
 - La CI refuse de publier tant que `npm run check:release` échoue (« À COMPLÉTER », tirets longs).
+- **Version de travail** : variable de dépôt `SITE_MODE=preview` → bandeau jaune « version de travail »,
+  `noindex` sur chaque page (vérifié par la CI), `robots.txt` fermé, pas de sitemap ; les « À COMPLÉTER »
+  deviennent de simples avertissements. **Active depuis le 2026-09-30** (aperçu pour le bureau, mentions
+  légales incomplètes). Pour la mise en ligne officielle : compléter siège + RNA, puis passer la variable
+  à `production` (ou la supprimer) et relancer le workflow.
 - Déployer = `git push origin main`, rien d'autre. Vérifier : onglet Actions du dépôt, puis le site.
 
 ## Identité visuelle et thèmes

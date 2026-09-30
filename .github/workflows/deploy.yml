@@ -2,7 +2,8 @@
 # - à chaque push sur main ;
 # - chaque lundi matin, pour que l'agenda (événements passés masqués) reste à jour sans intervention ;
 # - à la demande (onglet Actions).
-# Le déploiement est bloqué tant qu'il reste un « À COMPLÉTER » ou un tiret long dans le site.
+# Le déploiement est bloqué tant qu'il reste un « À COMPLÉTER » ou un tiret long dans le site,
+# sauf en version de travail (variable de dépôt SITE_MODE=preview : bandeau + noindex).
 name: Déploiement
 
 on:
@@ -37,7 +38,10 @@ jobs:
           # À renseigner dans Settings > Secrets and variables > Actions > Variables
           SITE_URL: ${{ vars.SITE_URL }}
           BASE_PATH: ${{ vars.BASE_PATH }}
+          SITE_MODE: ${{ vars.SITE_MODE }}
       - run: npm run check:release
+        env:
+          SITE_MODE: ${{ vars.SITE_MODE }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
